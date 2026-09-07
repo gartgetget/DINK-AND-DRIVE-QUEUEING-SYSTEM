@@ -40,7 +40,7 @@ export const SkillMatchingView: React.FC<SkillMatchingViewProps> = ({
 }) => {
   const [matchingMode, setMatchingMode] = useState<'doubles_balancer' | 'singles_challenger' | 'tier_browser'>('doubles_balancer');
   
-  // Selected 4 players for the doubles balancer (initially picks active player + 3 closest DUPR players)
+  // Selected 4 players for the doubles balancer (initially picks active player + 3 closest Meter players)
   const [selectedPlayerIds, setSelectedPlayerIds] = useState<string[]>(() => {
     // Sort other players by closest rating to active player
     const others = allPlayers
@@ -112,12 +112,12 @@ export const SkillMatchingView: React.FC<SkillMatchingViewProps> = ({
           <div className="flex items-center gap-2.5">
             <span className="w-3 h-3 rounded-full bg-lime-500 animate-pulse" />
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-display uppercase tracking-tight flex items-center gap-2">
-              <span>DUPR Skill-Level Matchmaker</span>
+              <span>Meter Skill-Level Matchmaker</span>
               <Sparkles className="w-5 h-5 text-amber-500" />
             </h2>
           </div>
           <p className="text-xs sm:text-sm font-bold text-slate-500 mt-1">
-            Dynamic Universal Pickleball Rating (DUPR) algorithmic balancer for balanced, competitive games.
+            Meter algorithmic balancer for balanced, competitive games.
           </p>
         </div>
 
@@ -192,7 +192,7 @@ export const SkillMatchingView: React.FC<SkillMatchingViewProps> = ({
                 id="auto-pick-compatible-btn"
                 onClick={handleAutoPickCompatible}
                 className="text-xs text-slate-900 bg-lime-400 hover:bg-lime-300 border-2 border-lime-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5 font-black uppercase tracking-tight transition-all shadow-xs"
-                title="Auto pick 3 players closest to your DUPR"
+                title="Auto pick 3 players closest to your Meter rating"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Auto-Match</span>
@@ -364,7 +364,7 @@ export const SkillMatchingView: React.FC<SkillMatchingViewProps> = ({
                       <div>
                         <span className="text-slate-500">Rating Differential: </span>
                         <strong className="text-slate-900 font-mono font-black">
-                          Δ {doublesBalanceResult.diff} DUPR
+                          Δ {doublesBalanceResult.diff} Meter
                         </strong>
                       </div>
                       <div>
@@ -430,7 +430,7 @@ export const SkillMatchingView: React.FC<SkillMatchingViewProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-5 bg-white border-4 border-slate-200 rounded-[2.5rem] p-5 sm:p-6 shadow-md space-y-4">
             <h3 className="text-base font-black text-slate-900">Choose a Singles Challenger</h3>
-            <p className="text-xs font-bold text-slate-500">Matching against you ({activePlayer.name} - {activePlayer.duprRating} DUPR)</p>
+            <p className="text-xs font-bold text-slate-500">Matching against you ({activePlayer.name} - {activePlayer.duprRating} Meter)</p>
 
             <div className="max-h-[420px] overflow-y-auto space-y-2 pr-1">
               {allPlayers
@@ -497,7 +497,7 @@ export const SkillMatchingView: React.FC<SkillMatchingViewProps> = ({
                     <h5 className="font-black text-sm text-slate-900">{activePlayer.name}</h5>
                     <p className="text-xs font-bold text-slate-500">{activePlayer.playStyle}</p>
                     <span className="inline-block mt-2 font-mono font-black text-slate-900 bg-lime-300 px-2.5 py-0.5 rounded-full text-xs">
-                      {activePlayer.duprRating.toFixed(2)} DUPR
+                      {activePlayer.duprRating.toFixed(2)} Meter
                     </span>
                   </div>
 
@@ -511,7 +511,7 @@ export const SkillMatchingView: React.FC<SkillMatchingViewProps> = ({
                     <h5 className="font-black text-sm text-slate-900">{challenger.name}</h5>
                     <p className="text-xs font-bold text-slate-500">{challenger.playStyle}</p>
                     <span className="inline-block mt-2 font-mono font-black text-amber-950 bg-amber-300 px-2.5 py-0.5 rounded-full text-xs">
-                      {challenger.duprRating.toFixed(2)} DUPR
+                      {challenger.duprRating.toFixed(2)} Meter
                     </span>
                   </div>
                 </div>
@@ -545,7 +545,7 @@ export const SkillMatchingView: React.FC<SkillMatchingViewProps> = ({
         </div>
       )}
 
-      {/* MODE 3: TIER BROWSER & DUPR REFERENCE */}
+      {/* MODE 3: TIER BROWSER & METER REFERENCE */}
       {matchingMode === 'tier_browser' && (
         <div className="space-y-6">
           {/* Tier filter tabs */}
@@ -587,7 +587,7 @@ export const SkillMatchingView: React.FC<SkillMatchingViewProps> = ({
 
                 <div className="bg-slate-50 p-2.5 rounded-2xl border-2 border-slate-200 grid grid-cols-2 gap-2 text-center text-xs">
                   <div>
-                    <span className="text-[10px] text-slate-500 uppercase font-black block">DUPR</span>
+                    <span className="text-[10px] text-slate-500 uppercase font-black block">Meter</span>
                     <span className="font-mono font-black text-slate-900 bg-lime-300 px-2 py-0.5 rounded-full inline-block mt-0.5">{player.duprRating.toFixed(2)}</span>
                   </div>
                   <div>

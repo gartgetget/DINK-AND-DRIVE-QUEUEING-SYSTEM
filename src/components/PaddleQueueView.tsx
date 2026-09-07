@@ -213,7 +213,7 @@ export const PaddleQueueView: React.FC<PaddleQueueViewProps> = ({
                         <div
                           key={player.id}
                           className="flex items-center gap-1.5 bg-white border-2 border-slate-200 px-2.5 py-1 rounded-xl shrink-0 shadow-xs"
-                          title={`${player.name} (${player.duprRating} DUPR) - ${player.playStyle}`}
+                            title={`${player.name} (${player.duprRating} Meter) - ${player.playStyle}`}
                         >
                           <img
                             src={player.avatar}
@@ -453,7 +453,7 @@ export const PaddleQueueView: React.FC<PaddleQueueViewProps> = ({
                           {isSelf && <span className="text-[9px] bg-slate-900 text-lime-400 px-1.5 py-0.5 rounded-full">You</span>}
                         </div>
                         <span className="font-mono text-slate-900 font-black bg-lime-300 px-2 py-0.5 rounded-full text-[10px]">
-                          {player.duprRating.toFixed(2)} DUPR
+                          {player.duprRating.toFixed(2)} Meter
                         </span>
                       </button>
                     );

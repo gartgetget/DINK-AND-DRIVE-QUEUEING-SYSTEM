@@ -601,7 +601,7 @@ export const CourtBookingView: React.FC<CourtBookingViewProps> = ({
                   type="text"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="e.g. 4.0+ DUPR Doubles Ladder Prep"
+                  placeholder="e.g. 4.0+ Meter Doubles Ladder Prep"
                   className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-slate-900 font-bold focus:outline-none focus:border-lime-400"
                 />
               </div>

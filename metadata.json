@@ -1,6 +1,6 @@
 {
-  "name": "Pickleball Court Management & Queue System",
-  "description": "Comprehensive 14-court pickleball facility management, automated paddle waitlist rotations, DUPR skill-level matchmaking, and MongoDB persistent backend.",
+  "name": "Dink&Drive Court Management & Queue System",
+  "description": "Comprehensive 14-court pickleball facility management, automated paddle waitlist rotations, Meter skill-level matchmaking, and MongoDB persistent backend.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

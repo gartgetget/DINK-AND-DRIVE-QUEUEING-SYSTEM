@@ -63,7 +63,7 @@ export const MongoStatusModal: React.FC<MongoStatusModalProps> = ({
                   {isConnected ? 'Cluster Live' : 'Database Layer Ready'}
                 </span>
               </div>
-              <p className="text-xs font-bold text-slate-500">PickleQueue native document storage layer</p>
+              <p className="text-xs font-bold text-slate-500">Dink&amp;Drive native document storage layer</p>
             </div>
           </div>
           <button
@@ -132,7 +132,7 @@ export const MongoStatusModal: React.FC<MongoStatusModalProps> = ({
               <span className="text-xl font-mono font-black text-slate-900 mt-0.5 inline-block">
                 {status?.collections.players ?? 20}
               </span>
-              <span className="text-[9px] text-slate-400 block font-bold">DUPR Roster</span>
+              <span className="text-[9px] text-slate-400 block font-bold">Meter Roster</span>
             </div>
 
             <div className="bg-slate-50 p-3 rounded-2xl border-2 border-slate-200 text-center">

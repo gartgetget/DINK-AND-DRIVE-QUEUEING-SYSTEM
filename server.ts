@@ -37,7 +37,7 @@ async function startServer() {
       const status = await getMongoStatus();
       res.json({
         status: 'ok',
-        service: 'Pickleball Court Management & Queue System',
+        service: 'Dink&Drive Court Management & Queue System',
         courtsAvailable: status.collections.courts,
         mongodb: {
           connected: status.isConnected,
@@ -198,11 +198,11 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[PickleQueue Server] Running on http://0.0.0.0:${PORT}`);
+    console.log(`[Dink&Drive Server] Running on http://0.0.0.0:${PORT}`);
   });
 }
 
 startServer().catch((err) => {
-  console.error('[PickleQueue Server] Startup error:', err);
+  console.error('[Dink&Drive Server] Startup error:', err);
   process.exit(1);
 });

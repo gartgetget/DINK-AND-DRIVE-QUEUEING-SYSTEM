@@ -50,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({
   }> = [
     { id: 'courts', label: 'Courts Rental Queue', badge: `${occupiedCourtsCount}/${courts.length}` },
     { id: 'queue', label: 'Paddle Rack Waitlist', badge: queuedPlayersCount > 0 ? `${queuedPlayersCount}` : undefined },
-    { id: 'matchmaking', label: 'DUPR Skill Matcher', badge: 'AI Balanced' },
+    { id: 'matchmaking', label: 'Meter Skill Matcher', badge: 'AI Balanced' },
     { id: 'bookings', label: 'Court Reservations' },
     { id: 'members', label: 'Member Directory', badge: `${allPlayers.length}` },
   ];
@@ -140,10 +140,10 @@ export const Header: React.FC<HeaderProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 font-display">
-                PICKLE<span className="text-lime-600">QUEUE</span>
+                Dink<span className="text-lime-600">&amp;</span>Drive
               </h1>
               <span className="text-[10px] uppercase font-black tracking-wider bg-slate-900 text-lime-400 px-2 py-0.5 rounded-full shadow-xs">
-                DUPR Verified
+                Verified
               </span>
             </div>
             <p className="text-xs font-bold text-slate-500">Court Rotation Engine • Automated Waitlists • Skill Matching</p>

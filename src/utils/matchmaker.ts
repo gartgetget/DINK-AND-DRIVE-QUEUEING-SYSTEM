@@ -13,7 +13,7 @@ export interface MatchBalanceResult {
 
 /**
  * Given 4 players for doubles, calculates all permutations and returns the pairing
- * that yields the closest team average DUPR ratings for maximum game balance.
+ * that yields the closest team average Meter ratings for maximum game balance.
  */
 export function optimizeDoublesTeams(players: Player[]): MatchBalanceResult | null {
   if (players.length < 4) return null;
@@ -102,7 +102,7 @@ export function optimizeSinglesMatch(playerA: Player, playerB: Player): MatchBal
 }
 
 /**
- * Filter players matching a skill tier or DUPR range
+ * Filter players matching a skill tier or Meter range
  */
 export function getPlayersInTier(players: Player[], tier: SkillTier): Player[] {
   if (tier === 'All Levels') return players;

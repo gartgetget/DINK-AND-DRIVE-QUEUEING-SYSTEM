@@ -92,7 +92,7 @@ export interface MatchmakingRequest {
   minDupr: number;
   maxDupr: number;
   format: 'doubles' | 'singles';
-  competitiveLevel: 'Casual Fun' | 'Competitive DUPR Rated' | 'Skill Building Drills';
+  competitiveLevel: 'Casual Fun' | 'Competitive Meter Rated' | 'Skill Building Drills';
   preferredTime: 'Now (Next Court)' | 'Within 30 Mins' | 'Scheduled Open Play';
   matchedGroup?: {
     teamA: Player[];

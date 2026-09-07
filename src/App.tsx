@@ -442,7 +442,7 @@ export default function App() {
           <div className="flex flex-wrap items-center gap-3 sm:gap-5">
             <div className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 rounded-full bg-lime-400 animate-pulse" />
-              <span className="font-black uppercase tracking-wider text-white">PickleQueue Operational</span>
+              <span className="font-black uppercase tracking-wider text-white">Dink&amp;Drive Operational</span>
             </div>
             <span className="text-slate-500 hidden sm:inline">•</span>
             <div className="text-slate-300 font-bold">

@@ -31,7 +31,7 @@ export const MemberDirectoryView: React.FC<MemberDirectoryViewProps> = ({
 
   // New Player Form State
   const [name, setName] = useState('');
-  const [duprRating, setDuprRating] = useState<number>(3.5);
+  const [duprLevel, setDuprLevel] = useState<'Novice' | 'Intermediate' | 'Advanced' | 'Elite'>('Intermediate');
   const [playStyle, setPlayStyle] = useState<Player['playStyle']>('All-Court');
   const [preferredSide, setPreferredSide] = useState<Player['preferredSide']>('Either');
   const [membershipTier, setMembershipTier] = useState<Player['membershipTier']>('Gold Member');
@@ -52,6 +52,14 @@ export const MemberDirectoryView: React.FC<MemberDirectoryViewProps> = ({
   const handleCreateMember = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
+
+    const duprRatingByLevel = {
+      Novice: 2.5,
+      Intermediate: 3.5,
+      Advanced: 4.5,
+      Elite: 5.2,
+    };
+    const duprRating = duprRatingByLevel[duprLevel];
 
     const newMember: Player = {
       id: `p-${Date.now()}`,
@@ -84,7 +92,7 @@ export const MemberDirectoryView: React.FC<MemberDirectoryViewProps> = ({
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-display uppercase tracking-tight">Member Roster &amp; Skill Ratings</h2>
           </div>
           <p className="text-xs sm:text-sm font-bold text-slate-500 mt-1">
-            Verified club players with DUPR ratings, play styles, and win rate analytics.
+            Verified club players with Meter ratings, play styles, and win rate analytics.
           </p>
         </div>
 
@@ -162,9 +170,9 @@ export const MemberDirectoryView: React.FC<MemberDirectoryViewProps> = ({
                     </div>
                   </div>
 
-                  {/* DUPR Pill */}
+                  {/* Meter Pill */}
                   <div className="bg-lime-300 px-3 py-1 rounded-2xl border border-lime-400 text-right">
-                    <span className="text-[9px] text-slate-700 uppercase block font-black">DUPR</span>
+                    <span className="text-[9px] text-slate-700 uppercase block font-black">Meter</span>
                     <span className="text-sm font-mono font-black text-slate-900">
                       {player.duprRating.toFixed(2)}
                     </span>
@@ -231,20 +239,18 @@ export const MemberDirectoryView: React.FC<MemberDirectoryViewProps> = ({
               </div>
 
               <div>
-                <div className="flex justify-between items-center mb-1">
-                  <label className="font-black text-slate-800 uppercase tracking-tight">DUPR Rating (2.0 - 5.5)</label>
-                  <span className="font-mono font-black text-slate-900 bg-lime-300 px-2.5 py-0.5 rounded-full">{Number(duprRating).toFixed(2)}</span>
-                </div>
-                <input
+                <label className="font-black text-slate-800 block mb-1 uppercase tracking-tight">Meter Level &amp; Rating</label>
+                <select
                   id="new-member-dupr"
-                  type="range"
-                  min={2.0}
-                  max={5.5}
-                  step={0.05}
-                  value={duprRating}
-                  onChange={(e) => setDuprRating(parseFloat(e.target.value))}
-                  className="w-full accent-lime-500 mt-2"
-                />
+                  value={duprLevel}
+                  onChange={(e) => setDuprLevel(e.target.value as typeof duprLevel)}
+                  className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-slate-900 font-bold focus:outline-none focus:border-lime-400"
+                >
+                  <option value="Novice">Novice - 2.50</option>
+                  <option value="Intermediate">Intermediate - 3.50</option>
+                  <option value="Advanced">Advanced - 4.50</option>
+                  <option value="Elite">Elite - 5.20</option>
+                </select>
               </div>
 
               <div className="grid grid-cols-2 gap-3">

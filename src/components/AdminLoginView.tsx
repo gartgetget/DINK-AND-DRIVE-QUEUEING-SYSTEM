@@ -30,7 +30,7 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({ onLogin }) => {
             <ShieldCheck className="w-8 h-8 text-slate-900" />
           </div>
           <div>
-            <p className="text-xs font-black text-lime-700 uppercase tracking-widest">PickleQueue</p>
+            <p className="text-xs font-black text-lime-700 uppercase tracking-widest">Dink&Drive</p>
             <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Admin Login</h1>
             <p className="text-xs font-bold text-slate-500 mt-1">Sign in to manage courts, rentals, members, and reports.</p>
           </div>
