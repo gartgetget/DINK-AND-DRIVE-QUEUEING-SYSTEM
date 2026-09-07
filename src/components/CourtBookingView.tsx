@@ -15,7 +15,8 @@ import {
   Users,
   DollarSign,
   FileDown,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Eye
 } from 'lucide-react';
 import { playCourtCalledChime, playPaddlePop } from '../utils/audio';
 
@@ -110,6 +111,7 @@ export const CourtBookingView: React.FC<CourtBookingViewProps> = ({
   const [selectedDate, setSelectedDate] = useState<string>(() => new Date().toISOString().split('T')[0]);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [reportPeriod, setReportPeriod] = useState<ReportPeriod>('daily');
+  const [showReportPreview, setShowReportPreview] = useState(false);
 
   // Form State
   const [selectedCourtId, setSelectedCourtId] = useState<string>(courts[0]?.id || 'court-1');
@@ -210,6 +212,9 @@ export const CourtBookingView: React.FC<CourtBookingViewProps> = ({
     'Booked By': reservation.bookedBy.name,
   }));
 
+  const totalRevenue = reportReservations.reduce((sum, r) => sum + getReservationFee(r), 0);
+  const avgFee = reportReservations.length > 0 ? totalRevenue / reportReservations.length : 0;
+
   const downloadExcelReport = () => {
     const rows = getReportRows();
     const worksheet = XLSX.utils.json_to_sheet(rows);
@@ -301,6 +306,15 @@ export const CourtBookingView: React.FC<CourtBookingViewProps> = ({
             >
               <FileSpreadsheet className="w-4 h-4" />
             </button>
+            <button
+              id="preview-report-btn"
+              type="button"
+              onClick={() => setShowReportPreview(true)}
+              title="Preview report"
+              className="p-3 rounded-2xl bg-violet-100 hover:bg-violet-200 border-2 border-violet-200 text-violet-800 transition-colors"
+            >
+              <Eye className="w-4 h-4" />
+            </button>
           </div>
           <button
             id="open-new-booking-btn"
@@ -313,6 +327,23 @@ export const CourtBookingView: React.FC<CourtBookingViewProps> = ({
             <Plus className="w-4 h-4" />
             <span>New Reservation</span>
           </button>
+        </div>
+      </div>
+
+      {/* Inline Report Summary Strip */}
+      <div className="bg-white border-4 border-slate-200 rounded-2xl px-5 py-3 shadow-md flex flex-wrap items-center gap-x-6 gap-y-2">
+        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Report Summary</span>
+        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600">
+          <span className="text-slate-400">Bookings:</span>
+          <strong className="text-slate-900 font-black">{reportReservations.length}</strong>
+        </div>
+        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600">
+          <span className="text-slate-400">Revenue:</span>
+          <strong className="text-slate-900 font-black">₱{totalRevenue.toLocaleString('en-PH')}</strong>
+        </div>
+        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600">
+          <span className="text-slate-400">Avg Fee:</span>
+          <strong className="text-slate-900 font-black">₱{avgFee.toLocaleString('en-PH')}</strong>
         </div>
       </div>
 
@@ -626,6 +657,118 @@ export const CourtBookingView: React.FC<CourtBookingViewProps> = ({
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* REPORT PREVIEW MODAL */}
+      {showReportPreview && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in duration-150">
+          <div className="bg-white border-4 border-slate-200 rounded-[2.5rem] max-w-4xl w-full max-h-[85vh] overflow-hidden shadow-2xl flex flex-col">
+            {/* Modal Header */}
+            <div className="p-6 pb-4 border-b-2 border-slate-200 flex items-start justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2.5 text-slate-900">
+                  <Eye className="w-5 h-5 text-violet-600" />
+                  <h3 className="font-black text-base uppercase tracking-tight">Report Preview</h3>
+                </div>
+                <p className="text-xs font-bold text-slate-500 mt-1">
+                  {getReportLabel(reportPeriod)} Court Rental Report &mdash; {selectedDate}
+                </p>
+              </div>
+              <button
+                id="close-report-preview-btn"
+                type="button"
+                onClick={() => setShowReportPreview(false)}
+                className="p-2 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Summary Stats Cards */}
+            <div className="px-6 pt-4 grid grid-cols-3 gap-3">
+              <div className="bg-violet-50 border-2 border-violet-200 rounded-2xl p-4 text-center">
+                <div className="text-[10px] font-black text-violet-500 uppercase tracking-widest mb-1">Total Bookings</div>
+                <div className="text-2xl font-black text-slate-900 font-display">{reportReservations.length}</div>
+              </div>
+              <div className="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-4 text-center">
+                <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">Total Revenue</div>
+                <div className="text-2xl font-black text-slate-900 font-display">₱{totalRevenue.toLocaleString('en-PH')}</div>
+              </div>
+              <div className="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 text-center">
+                <div className="text-[10px] font-black text-amber-500 uppercase tracking-widest mb-1">Avg Fee</div>
+                <div className="text-2xl font-black text-slate-900 font-display">₱{avgFee.toLocaleString('en-PH')}</div>
+              </div>
+            </div>
+
+            {/* Report Table */}
+            <div className="flex-1 overflow-y-auto px-6 py-4">
+              {reportReservations.length === 0 ? (
+                <div className="py-12 text-center">
+                  <div className="text-sm font-bold text-slate-400">No reservations found for this report period.</div>
+                </div>
+              ) : (
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50 border-b-2 border-slate-200 text-slate-600 font-black uppercase text-[11px]">
+                      <th className="p-3 rounded-l-xl w-10">#</th>
+                      <th className="p-3">Date</th>
+                      <th className="p-3">Start Time</th>
+                      <th className="p-3">End Time</th>
+                      <th className="p-3">Court</th>
+                      <th className="p-3 text-right">Price</th>
+                      <th className="p-3 rounded-r-xl">Booked By</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {reportReservations.map((reservation, index) => (
+                      <tr key={reservation.id} className="hover:bg-slate-50 transition-colors">
+                        <td className="p-3 font-black text-slate-400">{index + 1}</td>
+                        <td className="p-3 font-bold text-slate-900">{reservation.date}</td>
+                        <td className="p-3 font-mono font-bold text-slate-700">{formatTime12Hour(reservation.startTime)}</td>
+                        <td className="p-3 font-mono font-bold text-slate-700">{formatTime12Hour(reservation.endTime)}</td>
+                        <td className="p-3 font-black text-slate-900">{getCourtLabel(reservation, courts)}</td>
+                        <td className="p-3 text-right font-mono font-black text-slate-900">₱{getReservationFee(reservation).toLocaleString('en-PH')}</td>
+                        <td className="p-3 font-bold text-slate-700">{reservation.bookedBy.name}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 pt-4 border-t-2 border-slate-200 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                id="close-report-preview-footer-btn"
+                onClick={() => setShowReportPreview(false)}
+                className="px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-black uppercase tracking-tight transition-colors text-xs"
+              >
+                Close
+              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  id="preview-download-pdf-btn"
+                  onClick={downloadPdfReport}
+                  className="px-4 py-3 rounded-2xl bg-red-100 hover:bg-red-200 border-2 border-red-200 text-red-800 font-black uppercase tracking-tight text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  <FileDown className="w-4 h-4" />
+                  <span>PDF</span>
+                </button>
+                <button
+                  type="button"
+                  id="preview-download-excel-btn"
+                  onClick={downloadExcelReport}
+                  className="px-4 py-3 rounded-2xl bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-200 text-emerald-800 font-black uppercase tracking-tight text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  <FileSpreadsheet className="w-4 h-4" />
+                  <span>Excel</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
